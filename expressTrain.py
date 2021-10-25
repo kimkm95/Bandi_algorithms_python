@@ -360,40 +360,40 @@
 
 ### 3.9 - 12시간 시계 형식 확인 (p.138-139)
 
-# code : 3-24.py
-def clock12to24(time):
-    (hour, colon, minuteplus) = time.partition(":")
-    minute = minuteplus[:-2]
-    am_or_pm = minuteplus[-2:]
+# # code : 3-24.py
+# def clock12to24(time):
+#     (hour, colon, minuteplus) = time.partition(":")
+#     minute = minuteplus[:-2]
+#     am_or_pm = minuteplus[-2:]
 
-    if(am_or_pm == 'am'):
-        if(int(hour) == 12):
-            hour = '00'
-        if(len(hour) != 2):
-            hour = '0' + hour
-        return hour + colon + minute
-    elif(am_or_pm == 'pm'):
-        if(int(hour) <12):
-            hour = str(int(hour) + 12)
-        return hour + colon + minute
+#     if(am_or_pm == 'am'):
+#         if(int(hour) == 12):
+#             hour = '00'
+#         if(len(hour) != 2):
+#             hour = '0' + hour
+#         return hour + colon + minute
+#     elif(am_or_pm == 'pm'):
+#         if(int(hour) <12):
+#             hour = str(int(hour) + 12)
+#         return hour + colon + minute
 
-    return hour + colon + minute
+#     return hour + colon + minute
 
-# Test code
-print(clock12to24("12:00am")) # "00:00"
-print(clock12to24("12:05am")) # "00:05"
-print(clock12to24("1:30am"))  # "01:30"
-print(clock12to24("3:05am"))  # "03:05"
-print(clock12to24("12:00pm")) # "12:00"
-print(clock12to24("12:08pm")) # "12:08"
-print(clock12to24("3:50pm"))  # "15:50"
-print(clock12to24("9:12pm"))  # "21:12"
-print(clock12to24("11:59pm")) # "23:59"
+# # Test code
+# print(clock12to24("12:00am")) # "00:00"
+# print(clock12to24("12:05am")) # "00:05"
+# print(clock12to24("1:30am"))  # "01:30"
+# print(clock12to24("3:05am"))  # "03:05"
+# print(clock12to24("12:00pm")) # "12:00"
+# print(clock12to24("12:08pm")) # "12:08"
+# print(clock12to24("3:50pm"))  # "15:50"
+# print(clock12to24("9:12pm"))  # "21:12"
+# print(clock12to24("11:59pm")) # "23:59"
 
 
-# ### 3.10 - 24시간 시계를 12시간 시계로 변환 (p.140)
+### 3.10 - 24시간 시계를 12시간 시계로 변환 (p.140)
 
-# # code : 3-25.py
+# code : 3-25.py
 # def clock24to12(time):
 #     (hour, colon, minute) = time.partition(":")
 #     if int(hour) == 0 or int(hour) == 24:
@@ -414,3 +414,52 @@ print(clock12to24("11:59pm")) # "23:59"
 # # print(clock24to12("15:50")) # "3:50pm"
 # # print(clock24to12("20:20")) # "8:20pm"
 # # print(clock24to12("24:00")) # "12:00am"
+
+### 3.12 - 종료 시간 계산하기 (p.142)
+
+
+# # code : 3-27.py
+# def minutes_after(time, minuteplus):
+#     (hour,colon,minute) = time.partition(":")
+#     hourplus = minuteplus // 60
+#     minuteplus = minuteplus % 60
+
+#     hour = int(hour) + int(hourplus)
+#     minute = int(minute) + int(minuteplus)
+#     if(minute > 59):
+#         hour += 1
+#         minute = minute - 60
+#         return str(hour) + colon + str(minute)
+#     else:
+#         return str(hour) + colon + str(minute)
+
+
+
+# # # Test code
+# print(minutes_after("3:34",100))   # "5:14"
+# print(minutes_after("11:45",20))   # "12:5"
+# print(minutes_after("9:59",1))     # "10:0"
+# print(minutes_after("123:10",200)) # "126:30"
+
+
+### 3.13 - 소요 시간 계산하기 (p.142-143)
+
+# code : 3-28.py
+def time_passed(fromTime, toTime):
+    (hour1,colon,minute1) = fromTime.partition(":")
+    (hour2,colon,minute2) = toTime.partition(":")
+    hour = int(hour2) - int(hour1)
+    if minute2 > minute1:
+        minute = int(minute2) - int(minute1)
+        
+    else:
+        minute = int(minute2) + 60 - int(minute1)
+        hour -= 1
+
+    return str(hour) + colon + str(minute)
+    
+# # Test code
+print(time_passed("03:12","03:25")) # "0:13"
+print(time_passed("11:45","13:15")) # "1:30"
+print(time_passed("06:15","07:45")) # "1:30"
+print(time_passed("03:34","05:00")) # "1:26"
